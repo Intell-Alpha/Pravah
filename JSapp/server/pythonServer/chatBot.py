@@ -9,7 +9,9 @@ from flask_cors import CORS
 # CORS(app)
 chatbot_bp = Blueprint('chatbot', __name__)
 # Configure the API key for Google Gemini
-genai.configure(api_key="AIzaSyDBNCN6BnCmRkTgDZU7xmxWxkX4hZNVG6Q")
+      # kaushal api: AIzaSyDBNCN6BnCmRkTgDZU7xmxWxkX4hZNVG6Q
+      # 4d api: AIzaSyBld0XZZxlF9k4VBs7-0amTzx-pJhOuwDk
+genai.configure(api_key="AIzaSyBld0XZZxlF9k4VBs7-0amTzx-pJhOuwDk")
 
 @chatbot_bp.route('/chat', methods=['POST'])
 def chat():
@@ -28,6 +30,7 @@ def chat():
       )
     try:
         user_input = request.json.get('message')
+        print(user_input)
         background = "so first based on aadhar card a regular user can sign up... and if you already have an account you can login (forgot password yet to be implemented). if you are an issuing authority or verifying authority you would have to click on authorize button to verify your authority if your authority is valid your id will be created by admin manually. after logging in, if you are an regular user you will be redirected to individual dashboard where you can view all your documents and certificates uploaded by issuing authority. if you are an issuing authority you will be redirected to issuing dashboard page where you can upload documents to user's database (if you are a valid authority like passport offices, aadhar, banks, universities, schools, companies etc). if you are an verifying authority, you will be redirected to verifying dashboard (if you are a valid authority to verify people's background for some official purpose) in here you can upload application which are verified against the documents in the user's database and you will be given with a consistency score and a validation summary. "
         sampleInteration = '''General Instructions
         pravah stands for platform for reliable authentication and verification of Accredited holdings
@@ -173,13 +176,16 @@ Customization Options
         # Use the Gemini model to generate a response based on user input
         prompt = f'You are pravah chat bot assistant based on the text {background}, and sample conversations {sampleInteration} answer the question {user_input} in 25-30 words. answer only if the question is related to PRAVAH'
         response = model.generate_content([prompt])
-
+        print(response)
         # bot_reply = response.candidates[0]['output']
         bot_reply = response.text
+
         return jsonify({'response': bot_reply})
 
     except Exception as e:
         return jsonify({'error': str(e)})
+
+
 
 # if __name__ == '__main__':
 #     app.run(debug=True, port=8000)

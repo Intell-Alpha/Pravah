@@ -17,4 +17,4 @@ app.register_blueprint(validation_bp, url_prefix='/api')  # All validation route
 
 # Run the app
 if __name__ == '__main__':
-    app.run(debug=True, port=5000)
+    app.run(debug=True, port=2000)

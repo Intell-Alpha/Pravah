@@ -38,11 +38,11 @@ const Login = () => {
       if (docSnap.exists()) {
         const newData = docSnap.data()['dashboardAccess'];
         if (newData === 'General') {
-          navigate('/IndividualDashboard');
+          navigate('/IndividualHome');
         } else if (newData === 'Issuing') {
           navigate('/IssuingDashboard');
         } else if (newData === 'Verifying') {
-          navigate('/VerifyingHome');
+          navigate('/ServiceAuthority/Admin Home');
         } else {
           alert('You are not authorized to access this page');
         }

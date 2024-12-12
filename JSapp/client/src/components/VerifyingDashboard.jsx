@@ -107,7 +107,7 @@ const VerifyingDashboard = () => {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({ list1, list2, list3 }),
-      });
+      })
 
       if (!response.ok) {
         throw new Error(`Server error: ${response.statusText}`);

@@ -156,6 +156,7 @@ const styles = {
   header: {
     fontFamily: 'Arial, sans-serif',
     fontSize: '24px',
+    marginBottom: '20px'
   },
   searchBar: {
     display: 'flex',

@@ -22,6 +22,7 @@ class App:
         return [int(number) for number in numbers]
 
     def generateScore(self):
+        print("in the generator")
         for category in self.Categories:
             category_applicant_text = ""
             category_verification_text = ""
@@ -37,8 +38,12 @@ class App:
                 txt = docRead.returnText()
                 category_verification_text += txt + " \n"
 
+            print("category: ", category)
+            print("cat text: ", category_applicant_text)
+            print("val text: ", category_verification_text)
             AIvalidator = geminiAPI.Gemini_Model()
             score = AIvalidator.getValidation(category, category_applicant_text, category_verification_text)
+            print(score)
             self.validation.append(score)
         return self.validation
     
@@ -61,7 +66,9 @@ class App:
             finalTxt += i + "\n"
 
         summary = App.extract_summary(finalTxt)
+        print("summary: ", summary)
         return [scores[0][0], summary]
+
 
     @staticmethod
     def read_image_from_url(url):
@@ -77,14 +84,17 @@ def validate_documents():
     try:
         # Get JSON data from the request
         input_data = request.get_json()
+        print("input_data: " , input_data)
         category = input_data['list1']
         applicationDocuments = input_data['list2']
         verificationDocuments = input_data['list3']
 
         # Call the runMain function to get validation results
         params = App.runMain(category=category, application=applicationDocuments, verification=verificationDocuments)
-
-        # Return the response as JSON
+        # print(params)
+        # params = [90, "it's goood thoo brooo trusst trust trust"]
+        # Return the response as 
+        print(params)
         return jsonify(params)
     except Exception as e:
         return jsonify({"error": str(e)}), 500

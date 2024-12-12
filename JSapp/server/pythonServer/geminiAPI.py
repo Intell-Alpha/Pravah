@@ -11,7 +11,9 @@ from google.generativeai.types import HarmCategory, HarmBlockThreshold
 
 class Gemini_Model:
     def __init__(self) -> None:
-      genai.configure(api_key="AIzaSyDBNCN6BnCmRkTgDZU7xmxWxkX4hZNVG6Q")
+      # kaushal api: AIzaSyDBNCN6BnCmRkTgDZU7xmxWxkX4hZNVG6Q
+      # 4d api: AIzaSyBld0XZZxlF9k4VBs7-0amTzx-pJhOuwDk
+      genai.configure(api_key="AIzaSyBld0XZZxlF9k4VBs7-0amTzx-pJhOuwDk")
 
       # Create the model
       self.generation_config = {
@@ -31,6 +33,7 @@ class Gemini_Model:
       )
 
     def getValidation(self, category,application, verification):
+      print("in the gemini validation: check category:: ", category)
       prompt = f'''
 
       you are my text validator to check whether all the information in application is present in verification text.
@@ -49,12 +52,17 @@ class Gemini_Model:
       - score is the percentage of application text present in the verification text.
       - summary should **only** discuss the presence or absence of details from the application text, without referencing anything that is exclusive to the verification text.
       '''
-      response = self.model.generate_content([prompt1], safety_settings={
-        HarmCategory.HARM_CATEGORY_HATE_SPEECH: HarmBlockThreshold.BLOCK_NONE,
-        HarmCategory.HARM_CATEGORY_HARASSMENT: HarmBlockThreshold.BLOCK_NONE,
-        HarmCategory.HARM_CATEGORY_DANGEROUS_CONTENT: HarmBlockThreshold.BLOCK_NONE,
-        HarmCategory.HARM_CATEGORY_SEXUALLY_EXPLICIT: HarmBlockThreshold.BLOCK_NONE,
-        
-      })
-      # print(response)
+      prompt_final = "what is the capital of india?"
+      try:
+        response = self.model.generate_content([prompt1], safety_settings={
+          HarmCategory.HARM_CATEGORY_HATE_SPEECH: HarmBlockThreshold.BLOCK_NONE,
+          HarmCategory.HARM_CATEGORY_HARASSMENT: HarmBlockThreshold.BLOCK_NONE,
+          HarmCategory.HARM_CATEGORY_DANGEROUS_CONTENT: HarmBlockThreshold.BLOCK_NONE,
+          HarmCategory.HARM_CATEGORY_SEXUALLY_EXPLICIT: HarmBlockThreshold.BLOCK_NONE,
+          
+        })
+      except Exception as e:
+         print(e)
+      print("checking for response...")
+      print(response)
       return response.text
