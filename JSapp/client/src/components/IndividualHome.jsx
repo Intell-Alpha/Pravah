@@ -1,27 +1,39 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { AiOutlineSearch, AiFillDelete } from 'react-icons/ai'; // Icons (if needed)
 
 const IndividualHome = () => {
   const navigate = useNavigate();
-  const redirectToservicePage= (service) => {
-     if (service === "Aadhar"){
-        navigate("/Aadhar");
-     }
-     if(service === "Driving License"){
-        navigate("/Driving License");
-     }
-     if (service === "Passport"){
-        navigate("/Passport");
-     }
-  }
-  // Handle navigation to another route
+
+  // Debugging - Log the component render
+  useEffect(() => {
+    console.log("IndividualHome component rendered!");
+  }, []);
+
+  // Redirect to service page based on service type
+  const redirectToservicePage = (service) => {
+    console.log(`Navigating to ${service} page`); // Debugging - Log which service is being clicked
+    if (service === "Aadhar") {
+      navigate("/Aadhar");
+    }
+    if (service === "Driving License") {
+      navigate("/Driving License");
+    }
+    if (service === "Passport") {
+      navigate("/Passport");
+    }
+  };
+
+  // Handle navigation to other routes
   const handleViewFunctions = () => {
+    console.log("Navigating to IndividualDashboard"); // Debugging
     navigate('/IndividualDashboard');
   };
+
   const handleApplications = () => {
+    console.log("Navigating to IndividualApplications"); // Debugging
     navigate('/IndividualApplications');
-  }
+  };
+
   // List of services to render
   const services = [
     'Aadhar',
@@ -36,11 +48,6 @@ const IndividualHome = () => {
     <div style={styles.container}>
       {/* Header */}
       <header style={styles.header}>
-        <img
-          src="/logo_pravah.png"
-          alt="Pravah Logo"
-          style={styles.logo}
-        />
         <button style={styles.viewButton} onClick={handleApplications}>
           Current Applications
         </button>
@@ -55,16 +62,17 @@ const IndividualHome = () => {
       {/* Services List */}
       <div style={styles.cardContainer}>
         {services.map((service, index) => (
-          <div key={index} style={styles.card} onClick={() => {redirectToservicePage(service)}}>
+          <div
+            key={index}
+            style={styles.card}
+            onClick={() => {
+              redirectToservicePage(service);
+            }}
+          >
             {service}
           </div>
         ))}
       </div>
-
-      {/* Footer */}
-      <footer style={styles.footer}>
-        <p>&copy; 2024 Your Company. All Rights Reserved.</p>
-      </footer>
     </div>
   );
 };
@@ -72,25 +80,21 @@ const IndividualHome = () => {
 // CSS-in-JS styling
 const styles = {
   container: {
-    fontFamily: 'Arial, sans-serif',
+    fontFamily: 'poppins, sans-serif',
     display: 'flex',
     flexDirection: 'column',
     minHeight: '100vh',
-    backgroundColor: '#f4f4f4',
+    backgroundColor: '#ffffff',
+    position: "absolute",
+    width: "100%",
   },
   header: {
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
     backgroundColor: '#003366',
-    color: '#fff',
+    color: '#fffff',
     padding: '15px 30px',
-  },
-  logo: {
-    height: '50px',
-    width: 'auto',
-    maxWidth: '100%',
-    objectFit: 'contain',
   },
   viewButton: {
     backgroundColor: '#008CBA',
@@ -104,32 +108,31 @@ const styles = {
   title: {
     textAlign: 'center',
     margin: '30px 0',
-    fontSize: '2rem',
+    fontSize: '2.5rem',
     color: '#003366',
+    fontWeight: 'bold',
   },
   cardContainer: {
     display: 'grid',
-    gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
-    gap: '20px',
+    gridTemplateColumns: 'repeat(3, 1fr)',
+    gap: '30px',
     padding: '0 20px',
   },
   card: {
     backgroundColor: '#fff',
-    padding: '20px',
-    borderRadius: '10px',
-    boxShadow: '0 2px 5px rgba(0, 0, 0, 0.1)',
+    padding: '40px 20px',
+    borderRadius: '15px',
+    boxShadow: '0 4px 10px rgba(0, 0, 0, 0.1)',
     textAlign: 'center',
-    fontSize: '1.2rem',
+    fontSize: '1.8rem',
     fontWeight: 'bold',
-    color: '#333',
+    color: '#003366',
     cursor: 'pointer',
+    transition: 'transform 0.3s, box-shadow 0.3s',
   },
-  footer: {
-    marginTop: 'auto',
-    backgroundColor: '#003366',
-    color: '#fff',
-    textAlign: 'center',
-    padding: '10px 0',
+  cardHover: {
+    transform: 'scale(1.05)',
+    boxShadow: '0 8px 20px rgba(0, 0, 0, 0.2)',
   },
 };
 

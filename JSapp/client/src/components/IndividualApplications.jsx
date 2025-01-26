@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
-import { firestore, auth } from '../../firebase/config';
-import { collection, getDocs } from 'firebase/firestore';
+import React, { useEffect, useState } from "react";
+import { firestore, auth } from "../../firebase/config";
+import { collection, getDocs } from "firebase/firestore";
 
 const IndividualApplications = () => {
   const [applications, setApplications] = useState([]);
@@ -12,18 +12,16 @@ const IndividualApplications = () => {
       try {
         const path = `users/${auth.currentUser.uid}/applications`;
         const querySnapshot = await getDocs(collection(firestore, path));
-        
+
         const apps = [];
         querySnapshot.forEach((doc) => {
           apps.push({ id: doc.id, ...doc.data() });
         });
 
-        // Sort applications based on score in non-ascending order
         apps.sort((a, b) => b.score - a.score);
-        
         setApplications(apps);
       } catch (error) {
-        console.error('Error fetching applications:', error);
+        console.error("Error fetching applications:", error);
       }
     };
 
@@ -35,117 +33,97 @@ const IndividualApplications = () => {
     setShowPopup(true);
   };
 
-  const renderValu = (value) => {
-    const isValidUrl = (url) => {
-      try {
-        new URL(url); // Check if the value is a valid URL
-        return true;
-      } catch {
-        return false;
-      }
-    };
-  
-    if (typeof value === 'string' && isValidUrl(value)) {
-      return (
-        <a href={value} target="_blank" rel="noopener noreferrer" style={styles.link}>
-          {value}
-        </a>
-      );
-    }
-    return value; // Render plain text if not a link
-  };
-  
   const closePopup = () => {
     setShowPopup(false);
     setSelectedApplication(null);
   };
 
   const getScoreColor = (score) => {
-    if (score > 95) return { color: 'green', note: 'Request can be processed.', noteColor: 'green' };
-    if (score >= 90) return { color: 'orange', note: 'Request can be processed.', noteColor: 'green' };
-    if (score >= 80) return { color: 'yellow', note: 'Request needs to be processed with caution and careful review of the authority.', noteColor: 'red' };
-    return { color: 'red', note: 'Request needs to be processed with caution and careful review of the authority.', noteColor: 'red' };
+    if (score > 95) return { color: "#4CAF50", note: "Request can be processed." };
+    if (score >= 90) return { color: "#FF9800", note: "Request can be processed." };
+    if (score >= 80)
+      return {
+        color: "#FFEB3B",
+        note: "Request needs careful review.",
+      };
+    return {
+      color: "#F44336",
+      note: "Request needs caution and authority review.",
+    };
   };
 
   const renderValue = (value) => {
-    if (typeof value === 'string') {
-      return value; // Display strings directly
-    }
-    if (Array.isArray(value)) {
+    if (typeof value === "string") return value;
+    if (Array.isArray(value))
       return (
-        <ul style={{ paddingLeft: '20px' }}>
+        <ul>
           {value.map((item, index) => (
-            <li key={index}>{typeof item === 'object' ? JSON.stringify(item) : item}</li>
+            <li key={index}>{item}</li>
           ))}
         </ul>
-      ); // Display arrays as lists
-    }
-    if (typeof value === 'object' && value !== null) {
+      );
+    if (typeof value === "object" && value !== null)
       return (
         <div>
-          {Object.entries(value).map(([subKey, subValue]) => (
-            <p key={subKey}>
-              <strong>{subKey.replace(/_/g, ' ')}:</strong> {renderValue(subValue)}
+          {Object.entries(value).map(([key, val]) => (
+            <p key={key}>
+              <strong>{key.replace(/_/g, " ")}:</strong> {val}
             </p>
           ))}
         </div>
-      ); // Recursively render nested objects
-    }
-    return JSON.stringify(value); // Fallback for any other types
+      );
+    return JSON.stringify(value);
   };
 
   return (
     <div style={styles.container}>
       <header style={styles.header}>
-        <img 
-          src="/logo_pravah.png" 
-          alt="Pravah Logo" 
-          style={styles.logo} 
-        />
-        <button style={styles.backButton} onClick={() => window.history.back()}>
+        <img src="/logo_pravah.png" alt="Pravah Logo" style={styles.logo} />
+        <button
+          style={styles.backButton}
+          onClick={() => window.history.back()}
+        >
           Back
         </button>
       </header>
 
       <h1 style={styles.title}>Your Requests</h1>
-      <ul style={styles.applicationList}>
+      <div style={styles.applicationGrid}>
         {applications.map((app) => {
-          const { color, note, noteColor } = getScoreColor(app.score);
-          
+          const { color, note } = getScoreColor(app.score);
           return (
-            <li 
-              key={app.id} 
-              style={styles.applicationItem} 
+            <div
+              key={app.id}
+              style={{ ...styles.card, borderLeftColor: color }}
               onClick={() => handleApplicationClick(app)}
             >
-              <div style={{ ...styles.scoreIndicator, backgroundColor: color }}></div>
-              <div style={styles.applicationContent}>
-                <h2 style={styles.appName}>{app.appName}</h2>
-                {app.Aadhar && <p style={styles.appId}>Aadhar Number: {app.Aadhar}</p>}
-                <p style={styles.appId}>ID: {app.id}</p>
-                {/* <p style={{ ...styles.note, color: noteColor }}>{note}</p> */}
-              </div>
-            </li>
+              <h2 style={styles.cardTitle}>{app.appName}</h2>
+              {app.Aadhar && <p style={styles.cardText}>Aadhar: {app.Aadhar}</p>}
+              <p style={styles.cardText}>ID: {app.id}</p>
+              <p style={styles.cardNote}>{note}</p>
+            </div>
           );
         })}
-      </ul>
+      </div>
 
-    {showPopup && (
+      {showPopup && (
         <div style={styles.popupOverlay}>
-            <div style={styles.popup}>
+          <div style={styles.popup}>
             <h2 style={styles.popupTitle}>Application Details</h2>
             <div style={styles.popupContent}>
-                {selectedApplication &&
+              {selectedApplication &&
                 Object.entries(selectedApplication).map(([key, value]) => (
-                    <div key={key} style={styles.popupText}>
-                    <strong>{key.replace(/_/g, ' ')}:</strong> {renderValu(value)}
-                    </div>
+                  <p key={key} style={styles.popupText}>
+                    <strong>{key.replace(/_/g, " ")}:</strong> {renderValue(value)}
+                  </p>
                 ))}
             </div>
-            <button style={styles.closeButton} onClick={closePopup}>✖ Close</button>
-            </div>
+            <button style={styles.closeButton} onClick={closePopup}>
+              ✖ Close
+            </button>
+          </div>
         </div>
-        )}
+      )}
 
       <footer style={styles.footer}>
         <p>&copy; 2024 Pravah. All Rights Reserved.</p>
@@ -156,129 +134,126 @@ const IndividualApplications = () => {
 
 const styles = {
   container: {
-    fontFamily: 'Arial, sans-serif',
-    padding: '20px',
+    fontFamily: "Arial, sans-serif",
+    backgroundColor: "#f0f4f8",
+    minHeight: "10vh",
+    padding: "0",
+    position: "absolute",
+    top:0,
+    width: "100%"
   },
   header: {
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    backgroundColor: '#003366',
-    color: '#fff',
-    padding: '15px 30px',
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
+    backgroundColor: "#003366",
+    color: "#fff",
+    padding: "15px 30px",
   },
   logo: {
-    height: '50px',
-    width: 'auto',
-    objectFit: 'contain',
+    height: "50px",
   },
   backButton: {
-    backgroundColor: '#008CBA',
-    color: '#fff',
-    border: 'none',
-    padding: '10px 20px',
-    borderRadius: '5px',
-    cursor: 'pointer',
-    fontWeight: 'bold',
+    backgroundColor: "#1976D2",
+    color: "#fff",
+    border: "none",
+    padding: "10px 20px",
+    borderRadius: "2px",
+    cursor: "pointer",
+    fontWeight: "bold",
   },
   title: {
-    textAlign: 'center',
-    fontSize: '2rem',
-    marginTop: '20px',
-    marginBottom: '20px',
-    color: '#003366',
+    textAlign: "center",
+    fontSize: "2rem",
+    margin: "20px 0",
+    color: "#003366",
   },
-  applicationList: {
-    listStyleType: 'none',
-    padding: '0',
-    display: 'flex',
-    flexDirection: 'column',
-    gap: '10px',
+  applicationGrid: {
+    display: "grid",
+    gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
+    gap: "20px",
+    margin: "0 auto",
   },
-  applicationItem: {
-    display: 'flex',
-    alignItems: 'flex-start',
-    padding: '20px',
-    margin: '10px 0',
-    backgroundColor: '#f4f4f4',
-    borderRadius: '10px',
-    cursor: 'pointer',
-    boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
-    transition: 'background-color 0.3s, transform 0.3s',
-    border: '1px solid #ddd',
+  card: {
+    backgroundColor: "#fff",
+    borderRadius: "10px",
+    boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
+    padding: "20px",
+    borderLeft: "5px solid",
+    cursor: "pointer",
+    transition: "transform 0.3s",
   },
-  scoreIndicator: {
-    width: '8px', // width of the vertical line
-    height: '100%', // full height of the tile
-    borderRadius: '5px',
-    marginRight: '15px', // space between line and content
+  cardTitle: {
+    margin: "0 0 10px 0",
+    fontSize: "1.5rem",
+    color: "#003366",
   },
-  applicationContent: {
-    flexGrow: 1,
+  cardText: {
+    margin: "5px 0",
+    color: "#555",
   },
-  appName: {
-    margin: '0',
-    fontSize: '1.5rem',
-  },
-  appId: {
-    margin: '5px 0 0 0',
-    color: '#666',
-  },
-  note: {
-    marginTop: '5px',
-    fontStyle: 'italic',
+  cardNote: {
+    margin: "10px 0",
+    fontStyle: "italic",
+    color: "#777",
   },
   popupOverlay: {
-    position: 'fixed',
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
+    position: "fixed",
+    top: "0",
+    left: "0",
+    width: "100%",
+    height: "100%",
+    backgroundColor: "rgba(0, 0, 0, 0.6)",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    zIndex: "1000",
   },
   popup: {
-    backgroundColor: '#fff',
-    padding: '30px',
-    borderRadius: '10px',
-    width: '80%', // increased width for better layout
-    maxWidth: '800px', // increased max width
-    height: 'auto', // allows for variable height based on content
-    position: 'relative',
+    backgroundColor: "#fff",
+    padding: "30px",
+    borderRadius: "10px",
+    width: "90%",
+    maxWidth: "600px",
+    boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)",
+    position: "relative",
+    overflowY: "auto",
+    maxHeight: "80vh",
   },
   popupTitle: {
-    marginTop: '20px',
-    marginBottom: '20px',
+    fontSize: "1.5rem",
+    marginBottom: "20px",
+    color: "#003366",
   },
   popupContent: {
-    marginBottom: '20px',
+    maxHeight: "60vh",
+    overflowY: "auto",
   },
   popupText: {
-    margin: '10px',
-  },
-  link: {
-    color: '#008CBA',
-    textDecoration: 'none',
+    margin: "10px 0",
+    lineHeight: "1.5",
   },
   closeButton: {
-    backgroundColor: '#ff5c5c',
-    color: '#fff',
-    border: 'none',
-    padding: '10px 15px',
-    borderRadius: '5px',
-    cursor: 'pointer',
-    position: 'absolute',
-    top: '10px',
-    right: '10px',
+    position: "absolute",
+    top: "10px",
+    right: "10px",
+    backgroundColor: "#ff5c5c",
+    color: "#fff",
+    border: "none",
+    borderRadius: "0%",
+    width: "30px",
+    height: "30px",
+    cursor: "pointer",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
   },
   footer: {
-    marginTop: '20px',
-    backgroundColor: '#003366',
-    color: '#fff',
-    textAlign: 'center',
-    padding: '10px 0',
+    marginTop: "20px",
+    textAlign: "center",
+    backgroundColor: "#003366",
+    color: "#fff",
+    padding: "10px",
   },
 };
 

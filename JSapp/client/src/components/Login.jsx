@@ -178,8 +178,8 @@ const styles = {
   fullPage: {
     height: '100vh',
     width: '100vw',
-    backgroundImage: `url(${bgImage})`,
     backgroundSize: 'cover',
+    // backgroundColor: 'rgba(255, 255, 255, 0.9)',
     backgroundPosition: 'center',
     backgroundRepeat: 'no-repeat',
     display: 'flex',
@@ -192,6 +192,7 @@ const styles = {
     maxWidth: '500px',
     backgroundColor: 'rgba(255, 255, 255, 0.9)',
     borderRadius: '25px',
+    border: '2px solid black',  // Added solid blue border
   },
   logo: {
     width: '200px',

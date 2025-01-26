@@ -2,6 +2,7 @@ from flask import Flask, request, jsonify
 from PIL import Image
 import pytesseract
 import requests
+from dotenv import load_dotenv
 from io import BytesIO
 from flask_cors import CORS
 import os
@@ -9,11 +10,13 @@ import google.generativeai as genai
 from google.generativeai.types import HarmCategory, HarmBlockThreshold
 import re
 
+load_dotenv()
 app = Flask(__name__)
 CORS(app)
 # Configure your Gemini Flash 1.5 API endpoint and key (replace with actual values)
 GEMINI_API_URL = "https://api.gemini-flash.com/v1/compare"
-API_KEY = "AIzaSyBld0XZZxlF9k4VBs7-0amTzx-pJhOuwDk"
+# API_KEY = "AIzaSyCPYDKpGNVSjQIZtdG4K-vlfRLB7zlL0NM"
+API_KEY = os.getenv("GENAI_API_KEY")
 
 def extract_text_from_image(image_url):
     response = requests.get(image_url)
@@ -23,7 +26,7 @@ def extract_text_from_image(image_url):
     return text
 
 def compare_with_gemini(user_text, extracted_text):
-    genai.configure(api_key="AIzaSyBld0XZZxlF9k4VBs7-0amTzx-pJhOuwDk")
+    genai.configure(api_key=os.getenv("GENAI_API_KEY"))
     generation_config = {
         "temperature": 1,
         "top_p": 0.95,

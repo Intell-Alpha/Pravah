@@ -7,13 +7,14 @@ $ pip install google-generativeai
 import os
 import google.generativeai as genai
 from google.generativeai.types import HarmCategory, HarmBlockThreshold
+from dotenv import load_dotenv
 
-
+load_dotenv()
 class Gemini_Model:
     def __init__(self) -> None:
       # kaushal api: AIzaSyDBNCN6BnCmRkTgDZU7xmxWxkX4hZNVG6Q
       # 4d api: AIzaSyBld0XZZxlF9k4VBs7-0amTzx-pJhOuwDk
-      genai.configure(api_key="AIzaSyBld0XZZxlF9k4VBs7-0amTzx-pJhOuwDk")
+      genai.configure(api_key=os.getenv("GENAI_API_KEY"))
 
       # Create the model
       self.generation_config = {

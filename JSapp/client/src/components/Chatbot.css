@@ -6,7 +6,8 @@
   }
   
   .chat-icon {
-    background-color: #007bff;
+    background-color: #266CA9;
+    border: "2px" #FFF;
     padding: 10px;
     border-radius: 50%;
     cursor: pointer;
@@ -42,7 +43,7 @@
   }
   
   .chat-header {
-    background-color: #007bff;
+    background-color: #008CBA;
     padding: 10px;
     display: flex;
     justify-content: space-between;
@@ -72,7 +73,7 @@
   }
   
   .bot-message {
-    background-color: #007bff;
+    background-color: #008CBA;
     color: white;
     align-self: flex-start;
   }
@@ -98,7 +99,7 @@
   }
   
   .send-btn {
-    background-color: #007bff;
+    background-color: #008CBA;
     color: white;
     padding: 10px 15px;
     border: none;

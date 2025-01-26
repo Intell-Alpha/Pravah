@@ -1,125 +1,267 @@
+/* General Styles */
 body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-  }
-  
-  img {
-    max-width: 100%;
-    height: auto;
-  }
-  
-  .header {
-    background: rgba(0, 0, 0, 0.6);
-    padding: 20px;
-    color: white;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    position: fixed;
-    width: 100%;
-    top: 0;
-    z-index: 1000;
-  }
-  
-  .header img {
-    width: 150px;
-  }
-  
-  .nav {
-    display: flex;
-    gap: 20px;
-  }
-  
-  .nav a {
-    color: white;
-    text-decoration: none;
-    font-size: 18px;
-  }
-  
-  .nav a:hover {
-    text-decoration: underline;
-  }
-  
-  .body {
-    margin-top: 80px; /* Adjust based on header height */
-    padding: 20px;
-    text-align: center;
-  }
-  
-  .section {
-    display: none;
-  }
-  
-  .section.active {
-    display: block;
-    animation: slideIn 0.5s ease-in-out;
-  }
-  
-  @keyframes slideIn {
-    from {
-      opacity: 0;
-      transform: translateX(-100%);
-    }
-    to {
-      opacity: 1;
-      transform: translateX(0);
-    }
-  }
-  
-  .dots-nav {
-    display: flex;
-    justify-content: center;
-    margin-top: 20px;
-  }
-  
-  .dot {
-    width: 15px;
-    height: 15px;
-    background-color: #ddd;
-    border-radius: 50%;
-    margin: 0 5px;
-    cursor: pointer;
-  }
-  
-  .dot.active {
-    background-color: #007bff;
-  }
-  
-  .footer {
-    background: rgba(0, 0, 0, 0.6);
-    padding: 20px;
-    color: white;
-    display: flex;
-    justify-content: space-between;
-    position: fixed;
-    width: 100%;
-    bottom: 0;
-  }
-  
-  .social-media {
-    display: flex;
-    gap: 20px;
-  }
-  
-  .social-media img {
-    width: 30px;
-    height: 30px;
-  }
-  
-  .contact {
-    display: flex;
+  font-family: 'Roboto', Arial, sans-serif;
+  background-color: #f7f7f7;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+/* Header offset to ensure content starts below the fixed header */
+.main-content {
+  padding-top: 56px; /* Adjust to match the header height */
+  width: 100%;
+}
+
+/* Parallax Effect */
+#home {
+  position: relative;
+  height: 500px; /* Adjust height as needed */
+  overflow: hidden;
+  background-color: #ffffff;
+  padding: 6rem 1.5rem; /* Adjust padding for spacious section */
+}
+
+.parallax-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('path_to_your_graphic_image.jpg'); /* Replace with your image */
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed; /* Key property for parallax effect */
+  z-index: -1;
+  will-change: transform;
+}
+
+/* Text Centering and Font Styling */
+.text-center {
+  text-align: center;
+}
+
+.text-5xl {
+  font-size: 3rem;
+  font-weight: 700;
+}
+
+.text-3xl {
+  font-size: 2.25rem;
+  font-weight: 600;
+}
+
+.text-gray-600 {
+  color: #4a5568;
+}
+
+.text-gray-500 {
+  color: #6b7280;
+}
+
+.font-semibold {
+  font-weight: 600;
+}
+
+.py-16 {
+  padding-top: 4rem;
+  padding-bottom: 4rem;
+}
+
+.leading-tight {
+  line-height: 1.2;
+}
+
+.max-w-3xl {
+  max-width: 48rem;
+}
+
+.mx-auto {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.mt-6 {
+  margin-top: 1.5rem;
+}
+
+.mt-8 {
+  margin-top: 2rem;
+}
+
+/* Button Styling */
+a {
+  display: inline-block;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: none;
+}
+
+/* Custom Button */
+a.btn-primary {
+  background-color: #008CBA;
+  color: #fff;
+  font-weight: 600;
+  padding: 0.75rem 1.5rem;
+  border-radius: 9999px;
+  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+a.btn-primary:hover {
+  background-color: #2b6cb0;
+  transform: scale(1.05);
+}
+
+/* Services Section Styling */
+#services {
+  background-color: #f9f9f9;
+  padding: 4rem 2rem;
+}
+
+.services-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.service-card {
+  background-color: #ffffff;
+  border-radius: 8px;
+  padding: 2rem;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  text-align: center;
+}
+
+.service-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+}
+
+.service-card h3 {
+  font-size: 1.75rem;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 1rem;
+}
+
+.service-card p {
+  color: #666;
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+/* Team Section Styles */
+#team {
+  background-color: #f9f9f9;
+  padding: 4rem 2rem;
+}
+
+.team-container {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  flex-wrap: wrap;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.team-card {
+  background-color: #f9f9f9;
+  border-radius: 12px;
+  text-align: center;
+  padding: 2rem;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  width: 220px;
+}
+
+.team-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+}
+
+.team-photo {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 1rem;
+  border: 3px solid #008CBA;
+}
+
+.team-name {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 0.5rem;
+}
+
+.team-position {
+  color: #666;
+  font-size: 1rem;
+  font-weight: 500;
+  margin-bottom: 0;
+}
+/* Team Section */
+.team-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 2rem;
+  margin-top: 3rem; /* Adjust the gap here */
+}
+
+.team-card {
+  text-align: center;
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  padding: 2rem;
+}
+
+.team-photo {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 1rem;
+}
+
+.team-name {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #333;
+}
+
+/* Responsive Design for Team Section */
+@media (max-width: 768px) {
+  .team-container {
     flex-direction: column;
-    gap: 10px;
-  }
-  
-  .contact div {
-    display: flex;
     align-items: center;
-    gap: 10px;
   }
-  
-  .contact img {
-    width: 20px;
-    height: 20px;
+
+  .team-card {
+    width: 100%;
+    margin-bottom: 2rem;
   }
-  
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .text-5xl {
+    font-size: 2.25rem;
+  }
+
+  .mt-6 {
+    margin-top: 1.25rem;
+  }
+
+  .max-w-3xl {
+    max-width: 100%;
+  }
+}

@@ -1,0 +1,79 @@
+/* Container for the header */
+.header-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 75px;
+  display: flex;
+  justify-content: center; /* Center the navbar */
+  align-items: center;
+  padding: 15px 30px;
+  background-color: rgba(255, 255, 255, 0.95);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  z-index: 20;
+}
+
+/* Logo section styling */
+.logo-container {
+  position: absolute; /* Logo fixed to the left side */
+  left: 30px;         /* Distance from the left */
+  top: 0;
+  transform: translateY(-50%);
+}
+
+.logo {
+  width: 80px;
+  height: auto;
+}
+
+/* Navigation styling */
+.nav {
+  display: flex;
+  gap: 25px;
+  justify-content: center; /* Center the items in the nav */
+  align-items: center;     /* Vertically center items */
+}
+
+.nav-item {
+  font-size: 18px;
+  text-align: center; /* Center each nav item */
+}
+
+.nav-signin {
+  position: absolute;  /* Allow positioning relative to the parent container */
+  right: 30px;         /* Distance from the right edge */
+  font-size: 18px;
+}
+.nav-item a {
+  color: black;
+  font-weight: normal;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.nav-item a:hover {
+  color: #008CBA;
+  text-decoration: underline;
+}
+
+.nav-item.active a {
+  color: #008CBA;
+  font-weight: bold;
+}
+
+/* Sign-in button styles */
+.sign-in-button {
+  background-color: #008CBA; /* Blue background */
+  color: white;              /* White text */
+  border: none;              /* Remove border */
+  padding: 10px 20px;        /* Padding inside button */
+  border-radius: 5px;        /* Rounded corners */
+  cursor: pointer;          /* Pointer cursor on hover */
+  font-weight: bold;         /* Bold text */
+  font-size: 12px;           /* Font size */
+}
+
+.sign-in-button:hover {
+  background-color: #005f73; /* Darker blue on hover */
+}

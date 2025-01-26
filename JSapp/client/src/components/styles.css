@@ -1,0 +1,120 @@
+/* Ensure body takes up at least 100vh (full viewport height) */
+body, html {
+    height: 100%;
+    margin: 0;
+  }
+  
+  /* Container Styling (make sure it takes full height) */
+  .container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    min-height: 100vh; /* Ensures the container takes full screen height */
+  }
+  
+  /* Main Content Section */
+  .heading {
+    text-align: center;
+    margin-top: 20px;
+  }
+  
+  .heading h1 {
+    font-size: 36px;
+    color: #333;
+  }
+  
+  .heading p {
+    font-size: 18px;
+    color: #555;
+  }
+  
+  /* Card Container Styling */
+  .card-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    justify-content: center;
+    margin-top: 30px;
+  }
+  
+  /* Card Styles */
+  .card {
+    background-color: #fff;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    width: 280px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
+  }
+  
+  .card h4 {
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 10px;
+  }
+  
+  .card p {
+    font-size: 14px;
+    color: #777;
+  }
+  
+  /* Card Color Classes */
+  .bg-blue {
+    background-color: #2D69F0;
+    color: white;
+  }
+  
+  .bg-pink {
+    background-color: #DD246E;
+    color: white;
+  }
+  
+  .bg-purple {
+    background-color: #8007E6;
+    color: white;
+  }
+  
+  .bg-green {
+    background-color: #0CAE74;
+    color: white;
+  }
+  
+  .bg-orange {
+    background-color: #FF914D;
+    color: white;
+  }
+  
+  .bg-red {
+    background-color: #FF4D4D;
+    color: white;
+  }
+  
+  /* Chatbot Section */
+  .chatbot-wrapper {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 10;
+  }
+  
+  /* Footer Styling */
+  footer {
+    width: 100%;
+    background-color: #333;
+    color: white;
+    padding: 20px;
+    text-align: center;
+    position: relative;
+    margin-top: auto; /* This ensures the footer stays at the bottom */
+  }
+  
+  footer p {
+    margin: 0;
+    font-size: 14px;
+  }

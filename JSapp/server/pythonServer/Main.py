@@ -7,7 +7,7 @@ from validation import validation_bp  # Import the validation blueprint
 
 # Initialize the main Flask application
 app = Flask(__name__)
-
+import os
 # Enable CORS for cross-origin requests (optional but recommended)
 CORS(app)
 
