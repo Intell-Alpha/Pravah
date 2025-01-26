@@ -15,7 +15,6 @@ app = Flask(__name__)
 CORS(app)
 # Configure your Gemini Flash 1.5 API endpoint and key (replace with actual values)
 GEMINI_API_URL = "https://api.gemini-flash.com/v1/compare"
-# API_KEY = "AIzaSyCPYDKpGNVSjQIZtdG4K-vlfRLB7zlL0NM"
 API_KEY = os.getenv("GENAI_API_KEY")
 
 def extract_text_from_image(image_url):
