@@ -66,10 +66,8 @@ Follow the setup instructions in roadmaps/ to configure Firebase and the blockch
 Contributors
 - Kaushal Sambanna
 - Makam Devansh
-- Srilekha Kasha
-- Srivarsha Chivukula
-- Pervez Mubeen 
-- Sriram Shiva Keshav
+- Sanjana Jhansi
+- Vishwas Yeleshwaram
 
 License
 This project is licensed under the MIT License. See the LICENSE file for more details.
